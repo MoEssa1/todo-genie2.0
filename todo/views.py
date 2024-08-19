@@ -21,6 +21,12 @@ def todo_list(request):
         task = request.POST.get('task')
         due_date = request.POST.get('due_date')
         priority = request.POST.get('priority')
+
+        # Check if the due_date is empty
+        if not due_date:
+            messages.error(request, 'Due date cannot be empty.')
+            return redirect('todo_list')
+
         # is task a non-empty string?
         if isinstance(task, str) and task.strip():
             if len(task) > 60:
